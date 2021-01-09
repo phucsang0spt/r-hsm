@@ -45,7 +45,7 @@ Else need to install `babel-plugin-transform-decorators-legacy` and follow one o
     - test.{ts|js}
 ```
 
-2. in store/states/test file
+2. In store/states/test file
 
 - add @listen to which property that you want to trigger store change when it changed
 
@@ -63,7 +63,7 @@ export default class Test {
 
 ```
 
-3. in store/index file
+3. In store/index file
 
 ```
 import { mapStates } from "r-hsm";
@@ -79,30 +79,39 @@ export type RootState = ReturnType<typeof createStore>;
 
 ```
 
-4. use in component
+4. In your App.js or index.js
 
 ```
 ...
-import { createStore, RootState } from "./store";
-import { useHSM } from "r-hsm";
+import { createStore } from "./store";
 
 createStore();
 
-function App() {
-  const { states, watchValue } = useHSM<RootState,number>(
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+```
+
+5. Use in component
+```
+...
+import { RootState } from "./store";
+import { useHSM } from "r-hsm";
+
+function MyPage() {
+  const { states, watchValue } = useHSM<RootState, number>(
     rootState => rootState.testState.counter
   );
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p onClick={()=> states.testState.setCount() }>Click me</p>
-       <p>count: {watchValue}</p>
-      </header>
+    <div className="my-page">
+       <p onClick={()=>{states.testState.setCount()}}>Click me</p>
+       <p>Counter: {watchValue}</p>
     </div>
   );
 }
-
-export default App;
-
+export default MyPage;
 ```
