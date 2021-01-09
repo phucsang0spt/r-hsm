@@ -89,7 +89,7 @@ import { useHSM } from "r-hsm";
 createStore();
 
 function App() {
-  const { states, watchValue } = useHSM<RootState>(
+  const { states, watchValue } = useHSM<RootState,number>(
     rootState => rootState.testState.counter
   );
 

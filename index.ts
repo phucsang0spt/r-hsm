@@ -100,7 +100,7 @@ function isState<R>(value: any, nameOfStateChange: keyof R) {
   return watchIdentity === nameOfStateChange;
 }
 
-export function useHSM<R = any>(getState?: (states: R) => any) {
+export function useHSM<R = any, W = any>(getState?: (states: R) => W) {
   const global = getGlobal<R>();
 
   const [, forceReRender] = useState(0);
@@ -132,7 +132,7 @@ export function useHSM<R = any>(getState?: (states: R) => any) {
   }, []);
 
   return {
-    watchValue: value,
+    watchValue: value as W,
     states: global.rootState as R
   };
 }
