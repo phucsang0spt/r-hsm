@@ -79,6 +79,14 @@ export function mapStates<R = any>(states: R) {
       {}
     ) as R;
 
+    for (const state of Object.values(global.rootState)) {
+      Object.defineProperty(state, "rootState", {
+        value: global.rootState,
+        writable: false,
+        enumerable: false
+      });
+    }
+
     return global.rootState;
   };
 }

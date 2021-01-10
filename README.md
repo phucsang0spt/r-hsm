@@ -115,3 +115,20 @@ function MyPage() {
 }
 export default MyPage;
 ```
+6. Access other states
+```
+import { listen } from "r-hsm";
+import { RootState } from "..";
+
+export default class Test {
+  @listen
+  counter: number = 0;
+
+  rootState: RootState|null = null
+
+  public setCount() {
+    this.counter = this.counter + 1;
+    this.rootState!.otherState.actionInOtherState();
+  }
+}
+```
